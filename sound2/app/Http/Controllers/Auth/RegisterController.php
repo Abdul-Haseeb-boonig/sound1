@@ -1,23 +1,42 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controllers\middleware;
 
-class CategoryController extends Controller
+class RegisterController extends Controller
 {
- 
+    
+
+    use RegistersUsers;
+
+   
+    protected $redirectTo = '/home';
+
+    
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string|max:500',
-            'phone' => 'required|string|max:20',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'address' => ['required', 'string', 'max:500'],
+            'phone' => ['required', 'string', 'max:20'],
         ]);
     }
 
+    
     protected function create(array $data)
     {
         return User::create([
@@ -26,7 +45,7 @@ class CategoryController extends Controller
             'password' => Hash::make($data['password']),
             'address' => $data['address'],
             'phone' => $data['phone'],
-            'is_admin' => false,
+            // 'is_admin' => false,
         ]);
     }
 }

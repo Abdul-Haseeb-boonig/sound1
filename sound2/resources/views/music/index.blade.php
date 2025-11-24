@@ -4,7 +4,7 @@
     <h1>Music Library</h1>
 
     @auth
-        @if(auth()->user()->is_admin)
+        @if(auth()->check() && auth()->user()->email === 'admin@sound.com')
             <a href="{{ route('music.create') }}">Add New Music</a>
         @endif
     @endauth
@@ -17,7 +17,7 @@
             <a href="{{ route('music.show', $item) }}">Listen</a>
             
             @auth
-                @if(auth()->user()->is_admin)
+                @if(auth()->check() && auth()->user()->email === 'admin@sound.com')
                     <form action="{{ route('music.destroy', $item) }}" method="POST">
                         @csrf @method('DELETE')
                         <button type="submit">Delete</button>

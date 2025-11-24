@@ -14,11 +14,20 @@ class MusicController extends Controller
 
     public function create()
     {
+        // Hardcoded admin check
+        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+            abort(403, 'Unauthorized access.');
+        }
         return view('music.create');
     }
 
     public function store(Request $request)
     {
+        // Hardcoded admin check
+        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+            abort(403, 'Unauthorized access.');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -58,6 +67,11 @@ class MusicController extends Controller
 
     public function destroy(Music $music)
     {
+        // Hardcoded admin check
+        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+            abort(403, 'Unauthorized access.');
+        }
+        
         $music->delete();
         return redirect()->route('music.index')->with('success', 'Music deleted successfully!');
     }

@@ -11,7 +11,7 @@
             <li><a href="{{ route('music.index') }}">Music</a></li>
             <li><a href="{{ route('videos.index') }}">Videos</a></li>
             @auth
-                @if(auth()->user()->is_admin)
+                @if(auth()->check() && auth()->user()->email === 'admin@sound.com')
                     <li><a href="{{ route('music.create') }}">Add Music</a></li>
                     <li><a href="{{ route('videos.create') }}">Add Video</a></li>
                 @endif
