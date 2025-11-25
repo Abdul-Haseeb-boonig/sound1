@@ -1,11 +1,15 @@
 <?php
 namespace App\Http\Controllers;
-
+#this file needs to be checked at the end
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RatingController extends Controller
 {
+    use AuthorizesRequests;
     public function store(Request $request)
     {
         $request->validate([
@@ -16,7 +20,7 @@ class RatingController extends Controller
 
         Rating::updateOrCreate(
             [
-                'user_id' => auth()->id(),
+                'user_id' => Auth::check() ? Auth::user()->id : null,
                 'rateable_type' => $request->rateable_type,
                 'rateable_id' => $request->rateable_id,
             ],

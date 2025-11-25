@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,9 @@ class VideoController extends Controller
     public function create()
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+       
+
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
         }
         return view('videos.create');
@@ -24,7 +26,7 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
         }
 
@@ -68,7 +70,7 @@ class VideoController extends Controller
     public function destroy(Video $video)
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
         }
         

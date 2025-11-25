@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Music;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MusicController extends Controller
 {
@@ -15,16 +16,17 @@ class MusicController extends Controller
     public function create()
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
-        }
+        }else{
         return view('music.create');
+        }
     }
 
     public function store(Request $request)
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
         }
 
@@ -68,7 +70,7 @@ class MusicController extends Controller
     public function destroy(Music $music)
     {
         // Hardcoded admin check
-        if (!auth()->check() || auth()->user()->email !== 'admin@sound.com') {
+        if (!Auth::check() || Auth::user()->email !== 'admin@sound.com') {
             abort(403, 'Unauthorized access.');
         }
         
