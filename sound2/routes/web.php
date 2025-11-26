@@ -36,8 +36,3 @@ Route::put('/ratings/{rating}', [RatingController::class, 'update'])->name('rati
 Route::resource('music', MusicController::class)->except(['index', 'show']);
 Route::resource('videos', VideoController::class)->except(['index', 'show']);
 
-// ...existing code...
-Route::get('/__debug-music-create', function () {
-    return view('music.create');
-});
-// ...existing code...

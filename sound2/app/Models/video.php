@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class video extends Model
+class Video extends Model
 {
       protected $fillable = [
         'title', 'description', 'file_path', 'image_path',

@@ -12,9 +12,12 @@ class RatingController extends Controller
     use AuthorizesRequests;
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
         $request->validate([
-            'rateable_type' => 'required',
-            'rateable_id' => 'required',
+            'rateable_type' => 'required|string',
+            'rateable_id' => 'required|integer',
             'rating' => 'required|integer|between:1,5',
         ]);
 

@@ -11,9 +11,13 @@ class ReviewController extends Controller
     use AuthorizesRequests;
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
         $request->validate([
-            'reviewable_type' => 'required',
-            'reviewable_id' => 'required',
+            'reviewable_type' => 'required|string',
+            'reviewable_id' => 'required|integer',
             'comment' => 'required|string',
         ]);
 

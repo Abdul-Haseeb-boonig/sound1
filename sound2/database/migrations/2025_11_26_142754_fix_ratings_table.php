@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->nullableMorphs('rateable');
-            $table->integer('rating')->between(1, 5);
-            $table->timestamps();
-        });
+        Schema::table('ratings', function (Blueprint $table) {
+        $table->string('rateable_type')->nullable()->change();
+    });
     }
 
     /**
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::table('ratings', function (Blueprint $table) {
+        $table->string('rateable_type')->nullable(false)->change();
+    });
     }
 };
