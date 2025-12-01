@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Music;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MusicController extends Controller
 {
@@ -40,6 +41,18 @@ class MusicController extends Controller
             'album' => 'required|string',
             'genre' => 'required|string',
             'language' => 'required|string',
+        ]);
+
+        // Temporary debug: dump upload details to see what's happening
+        dd([
+            'has_file' => $request->hasFile('file'),
+            'file_error' => $request->file('file') ? $request->file('file')->getError() : null,
+            'file_size' => $request->file('file') ? $request->file('file')->getSize() : null,
+            'file_name' => $request->file('file') ? $request->file('file')->getClientOriginalName() : null,
+            'post_max_size' => ini_get('post_max_size'),
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'user_id' => Auth::check() ? Auth::id() : null,
+            'remote_addr' => $request->ip(),
         ]);
 
         $filePath = $request->file('file')->store('music', 'public');
